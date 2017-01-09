@@ -12,6 +12,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="463dp"
+        android:scaleType="fitXY"
         android:id="@+id/imgView" />
 
     <!-- This FrameLayout insets its children based on system windows using
@@ -32,25 +33,21 @@
             tools:ignore="UselessParent">
 
             <Button
-                android:id="@+id/dummy_button"
+                android:id="@+id/new_pic_btn"
                 style="?metaButtonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/dummy_button" />
+                android:layout_weight="0.24"
+                android:text="@string/pic_button" />
+            <Button
+                android:id="@+id/conection_button"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.24"
+                android:text="@string/connect_button" />
 
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/fullscreen_content"
-            android:layout_width="match_parent"
-            android:layout_height="202dp"
-            android:gravity="center"
-            android:keepScreenOn="true"
-            android:text="@string/dummy_content"
-            android:textColor="#33b5e5"
-            android:textSize="50sp"
-            android:textStyle="bold" />
 
     </FrameLayout>
 

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">ArchillesPaint</string>
 
-    <string name="dummy_button">Dummy Button</string>
+    <string name="connect_button">Controller </string>
+    <string name="pic_button"> New Picture </string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>
