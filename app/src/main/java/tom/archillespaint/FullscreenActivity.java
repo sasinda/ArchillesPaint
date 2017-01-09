@@ -105,7 +105,10 @@ public class FullscreenActivity extends AppCompatActivity {
                 toggle();
             }
         });
-        Picasso.with(context).load("http://i.imgur.com/DvpvklR.png").into(imageView);
+
+        Picasso.with(context).load("http://i.imgur.com/DvpvklR.png")
+                .error(R.drawable.aw_snap)
+                .into(imageView);
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
