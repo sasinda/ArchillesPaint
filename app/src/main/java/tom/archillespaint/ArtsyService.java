@@ -20,7 +20,7 @@ public class ArtsyService {
 
     public ImageView loadImage(ImageView imgView, Context context){
 
-        Picasso.with(context).load("http://previews.123rf.com/images/kabby/kabby1006/kabby100600002/7090722-Abstract-fun-cheerful-artsy-rainbow-backgrounds-design-Stock-Photo.jpg")
+        Picasso.with(context).load("http://i.imgur.com/DvpvklR.png")
 //                .transform(new SketchFilterTransformation(context))
                 .transform(new KuwaharaFilterTransformation(context, 10))
                 .error(R.drawable.aw_snap)

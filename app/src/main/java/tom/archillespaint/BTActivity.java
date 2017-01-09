@@ -116,6 +116,7 @@ public class BTActivity extends Activity
 
     void openBT() throws IOException
     {
+
         UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); //Standard SerialPortService ID
         mmSocket = mmDevice.createRfcommSocketToServiceRecord(uuid);
         mmSocket.connect();
