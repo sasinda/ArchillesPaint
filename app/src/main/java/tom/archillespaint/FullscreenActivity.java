@@ -16,6 +16,8 @@ import com.squareup.picasso.Picasso;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
+
+
 public class FullscreenActivity extends AppCompatActivity {
     /**
      * Whether or not the system UI should be auto-hidden after
@@ -87,6 +89,7 @@ public class FullscreenActivity extends AppCompatActivity {
         }
     };
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,10 +108,12 @@ public class FullscreenActivity extends AppCompatActivity {
                 toggle();
             }
         });
-
+        ArtsyService as = new ArtsyService();
+        as.execute();
+        System.out.println("done!");
         Picasso.with(context).load("http://i.imgur.com/DvpvklR.png")
-                .error(R.drawable.aw_snap)
                 .into(imageView);
+
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
