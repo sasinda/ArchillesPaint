@@ -6,6 +6,7 @@
     android:background="#0099cc"
     tools:context="tom.archillespaint.FullscreenActivity">
 
+
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
          TextureView, etc. -->
@@ -37,15 +38,17 @@
                 style="?metaButtonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.24"
+                android:layout_weight="0.11"
                 android:text="@string/pic_button" />
+
             <Button
-                android:id="@+id/conection_button"
-                style="?metaButtonBarButtonStyle"
-                android:layout_width="0dp"
+                android:text="Status"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.24"
-                android:text="@string/connect_button" />
+                android:background="@android:color/holo_red_dark"
+                android:id="@+id/controller" />
+
+
 
         </LinearLayout>
 

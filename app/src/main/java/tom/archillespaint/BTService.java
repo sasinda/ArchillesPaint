@@ -5,20 +5,20 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.EditText;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Set;
 import java.util.UUID;
 
-public class BTActivity extends Activity
+public class BTService extends Activity
 {
     TextView myLabel;
     EditText myTextbox;
@@ -32,7 +32,7 @@ public class BTActivity extends Activity
     int readBufferPosition;
     int counter;
     volatile boolean stopWorker;
-    public Button controllerButton;
+    int stretchCount;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -43,8 +43,6 @@ public class BTActivity extends Activity
         Button openButton = (Button)findViewById(R.id.open);
         Button sendButton = (Button)findViewById(R.id.send);
         Button closeButton = (Button)findViewById(R.id.close);
-        setContentView(R.layout.activity_fullscreen);
-        controllerButton=(Button)findViewById(R.id.controller);
         myLabel = (TextView)findViewById(R.id.label);
         myTextbox = (EditText)findViewById(R.id.entry);
 
@@ -95,7 +93,6 @@ public class BTActivity extends Activity
         if(mBluetoothAdapter == null)
         {
             myLabel.setText("No bluetooth adapter available");
-            controllerButton.setBackgroundColor(Color.RED);
         }
 
         if(!mBluetoothAdapter.isEnabled())
@@ -118,7 +115,6 @@ public class BTActivity extends Activity
                 }
             }
         }
-        controllerButton.setBackgroundColor(Color.GREEN);
         myLabel.setText("Bluetooth Device Found");
     }
 
