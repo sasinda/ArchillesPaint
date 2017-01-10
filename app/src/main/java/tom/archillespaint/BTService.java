@@ -8,19 +8,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.EditText;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Set;
 import java.util.UUID;
 
-public class BTActivity extends Activity
+public class BTService extends Activity
 {
-    TextView myLabel;
-    EditText myTextbox;
+
     BluetoothAdapter mBluetoothAdapter;
     BluetoothSocket mmSocket;
     BluetoothDevice mmDevice;
@@ -42,8 +42,6 @@ public class BTActivity extends Activity
         Button openButton = (Button)findViewById(R.id.open);
         Button sendButton = (Button)findViewById(R.id.send);
         Button closeButton = (Button)findViewById(R.id.close);
-        myLabel = (TextView)findViewById(R.id.label);
-        myTextbox = (EditText)findViewById(R.id.entry);
 
         //Open Button
         openButton.setOnClickListener(new View.OnClickListener()
@@ -91,7 +89,7 @@ public class BTActivity extends Activity
 
         if(mBluetoothAdapter == null)
         {
-            myLabel.setText("No bluetooth adapter available");
+//            myLabel.setText("No bluetooth adapter available");
         }
 
         if(!mBluetoothAdapter.isEnabled())
@@ -114,7 +112,7 @@ public class BTActivity extends Activity
                 }
             }
         }
-        myLabel.setText("Bluetooth Device Found");
+//        myLabel.setText("Bluetooth Device Found");
     }
 
     void openBT() throws IOException
@@ -128,7 +126,7 @@ public class BTActivity extends Activity
 
         beginListenForData();
 
-        myLabel.setText("Bluetooth Opened");
+//        myLabel.setText("Bluetooth Opened");
     }
 
     void beginListenForData()
@@ -203,10 +201,10 @@ public class BTActivity extends Activity
 
     void sendData() throws IOException
     {
-        String msg = myTextbox.getText().toString();
-        msg += "\n";
-        mmOutputStream.write(msg.getBytes());
-        myLabel.setText("Data Sent");
+//        String msg = myTextbox.getText().toString();
+//        msg += "\n";
+//        mmOutputStream.write(msg.getBytes());
+//        myLabel.setText("Data Sent");
     }
 
     void closeBT() throws IOException
@@ -215,6 +213,6 @@ public class BTActivity extends Activity
         mmOutputStream.close();
         mmInputStream.close();
         mmSocket.close();
-        myLabel.setText("Bluetooth Closed");
+//        myLabel.setText("Bluetooth Closed");
     }
 }
