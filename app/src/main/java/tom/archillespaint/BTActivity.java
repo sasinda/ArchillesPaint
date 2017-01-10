@@ -30,7 +30,8 @@ public class BTActivity extends Activity
     Thread workerThread;
     byte[] readBuffer;
     int readBufferPosition;
-    int counter;
+    int angle;
+    int state; //0=off, 1 = on
     volatile boolean stopWorker;
     public Button controllerButton;
 
@@ -166,9 +167,20 @@ public class BTActivity extends Activity
                                     System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
                                     final String data = new String(encodedBytes, "US-ASCII");
                                     readBufferPosition = 0;
+                                    if (data=="101"){
+                                        state=1;
+                                        angle=100;
+                                    }else {
+                                        state=0;
+                                        angle=0;
+                                    }
+                                    try {
+                                        Thread.sleep(100);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+//                                    counter+=Integer.parseInt(data);
 
-                                    counter+=Integer.parseInt(data);
-                                    System.out.println(counter);
 //                                    handler.post(new Runnable()
 //                                    {
 //                                        public void run()

@@ -20,8 +20,12 @@ import java.util.UUID;
 
 public class BTService extends Activity
 {
+<<<<<<< HEAD
     TextView myLabel;
     EditText myTextbox;
+=======
+
+>>>>>>> origin/master
     BluetoothAdapter mBluetoothAdapter;
     BluetoothSocket mmSocket;
     BluetoothDevice mmDevice;
@@ -30,9 +34,15 @@ public class BTService extends Activity
     Thread workerThread;
     byte[] readBuffer;
     int readBufferPosition;
+<<<<<<< HEAD
     int counter;
     volatile boolean stopWorker;
     int stretchCount;
+=======
+    int angle;
+    int state; //0=off, 1 = on
+    volatile boolean stopWorker;
+>>>>>>> origin/master
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -43,8 +53,11 @@ public class BTService extends Activity
         Button openButton = (Button)findViewById(R.id.open);
         Button sendButton = (Button)findViewById(R.id.send);
         Button closeButton = (Button)findViewById(R.id.close);
+<<<<<<< HEAD
         myLabel = (TextView)findViewById(R.id.label);
         myTextbox = (EditText)findViewById(R.id.entry);
+=======
+>>>>>>> origin/master
 
         //Open Button
         openButton.setOnClickListener(new View.OnClickListener()
@@ -92,7 +105,11 @@ public class BTService extends Activity
 
         if(mBluetoothAdapter == null)
         {
+<<<<<<< HEAD
             myLabel.setText("No bluetooth adapter available");
+=======
+//            myLabel.setText("No bluetooth adapter available");
+>>>>>>> origin/master
         }
 
         if(!mBluetoothAdapter.isEnabled())
@@ -115,7 +132,11 @@ public class BTService extends Activity
                 }
             }
         }
+<<<<<<< HEAD
         myLabel.setText("Bluetooth Device Found");
+=======
+//        myLabel.setText("Bluetooth Device Found");
+>>>>>>> origin/master
     }
 
     void openBT() throws IOException
@@ -129,7 +150,11 @@ public class BTService extends Activity
 
         beginListenForData();
 
+<<<<<<< HEAD
         myLabel.setText("Bluetooth Opened");
+=======
+//        myLabel.setText("Bluetooth Opened");
+>>>>>>> origin/master
     }
 
     void beginListenForData()
@@ -162,9 +187,26 @@ public class BTService extends Activity
                                     System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
                                     final String data = new String(encodedBytes, "US-ASCII");
                                     readBufferPosition = 0;
+<<<<<<< HEAD
 
                                     counter+=Integer.parseInt(data);
                                     System.out.println(counter);
+=======
+                                    if (data=="101"){
+                                        state=1;
+                                        angle=100;
+                                    }else {
+                                        state=0;
+                                        angle=0;
+                                    }
+                                    try {
+                                        Thread.sleep(100);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+//                                    counter+=Integer.parseInt(data);
+
+>>>>>>> origin/master
 //                                    handler.post(new Runnable()
 //                                    {
 //                                        public void run()
@@ -193,10 +235,17 @@ public class BTService extends Activity
 
     void sendData() throws IOException
     {
+<<<<<<< HEAD
         String msg = myTextbox.getText().toString();
         msg += "\n";
         mmOutputStream.write(msg.getBytes());
         myLabel.setText("Data Sent");
+=======
+//        String msg = myTextbox.getText().toString();
+//        msg += "\n";
+//        mmOutputStream.write(msg.getBytes());
+//        myLabel.setText("Data Sent");
+>>>>>>> origin/master
     }
 
     void closeBT() throws IOException
@@ -205,6 +254,10 @@ public class BTService extends Activity
         mmOutputStream.close();
         mmInputStream.close();
         mmSocket.close();
+<<<<<<< HEAD
         myLabel.setText("Bluetooth Closed");
+=======
+//        myLabel.setText("Bluetooth Closed");
+>>>>>>> origin/master
     }
 }
