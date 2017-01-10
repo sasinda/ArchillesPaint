@@ -7,6 +7,7 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.CountDownTimer;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +23,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Set;
 import java.util.UUID;
+
+import static tom.archillespaint.ExerciseTracker.COUNT_DOWN_STRETCH;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -178,6 +181,8 @@ public class FullscreenActivity extends AppCompatActivity {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         findViewById(R.id.new_pic_btn).setOnTouchListener(mDelayHideTouchListener);
+
+
     }
 
     @Override
@@ -316,18 +321,23 @@ public class FullscreenActivity extends AppCompatActivity {
                                     System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
                                     final String data = new String(encodedBytes, "US-ASCII");
                                     readBufferPosition = 0;
-//                                    System.out.println(data);
-                                    if (data=="101"){
+                                    System.out.println("Received Data:  "+data);
+                                    int message=Integer.parseInt(data.substring(0, 3));
+                                    if (message==101){ // streched up
                                         state=1;
                                         angle=100;
                                         tracker.updateAngle(angle);
-                                    }else {
+                                    }else if(message==100) { //down
                                         state=0;
                                         angle=0;
                                         tracker.updateAngle(angle);
+                                    } else if(message==110){
+                                        // pedal press
+                                        tracker.updatePedalPress();
                                     }
+
                                     try {
-                                        Thread.sleep(100);
+                                        Thread.sleep(500);
                                     } catch (InterruptedException e) {
                                         e.printStackTrace();
                                     }

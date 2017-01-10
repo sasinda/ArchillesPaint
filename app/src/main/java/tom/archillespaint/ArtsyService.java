@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 
+import jp.wasabeef.picasso.transformations.BlurTransformation;
 import jp.wasabeef.picasso.transformations.gpu.KuwaharaFilterTransformation;
 
 /**
@@ -35,10 +36,10 @@ public class ArtsyService extends AsyncTask<Object, Object, Void>{
     URL artsyUrl = null;
     HttpURLConnection urlConnection = null;
     String imgUrlString = null;
-    static ImageView imageview;
-    static Context context;
+    volatile static ImageView imageview;
+    volatile static Context context;
 
-    private static RequestCreator picassoReq;
+    volatile private static RequestCreator picassoReq;
 
     public ArtsyService(ImageView imv, Context c){
         imageview = imv;
@@ -106,11 +107,12 @@ public class ArtsyService extends AsyncTask<Object, Object, Void>{
     }
 
     public static void applyKuwaharaFilter(int radius){
-        picassoReq.transform(new KuwaharaFilterTransformation(context, 1)).into(imageview);
+        System.out.println("radius: "+radius);
+        picassoReq.transform(new KuwaharaFilterTransformation(context, radius)).into(imageview);
     }
 
     public static void apply(int radius){
-        picassoReq.transform(new KuwaharaFilterTransformation(context, 1)).into(imageview);
+        picassoReq.transform(new BlurTransformation(context, radius)).into(imageview);
     }
 
 }
