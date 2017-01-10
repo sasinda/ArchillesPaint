@@ -1,8 +1,10 @@
 package tom.archillespaint;
+
 import android.util.Log;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+
 import android.os.AsyncTask;
 
 import com.google.gson.Gson;
@@ -30,27 +32,28 @@ import jp.wasabeef.picasso.transformations.gpu.KuwaharaFilterTransformation;
  */
 
 
-
-
-public class ArtsyService extends AsyncTask<Object, Object, Void>{
+public class ArtsyService extends AsyncTask<Object, Object, Void> {
     URL artsyUrl = null;
     HttpURLConnection urlConnection = null;
     String imgUrlString = null;
-    volatile static ImageView imageview;
-    volatile static Context context;
+    static ImageView imageview;
+    static Context context;
+    private static RequestCreator picassoReq;
+    private static RequestCreator imgReq1;
+    private static RequestCreator imgReq2;
+    private static RequestCreator imgReq3;
+    private static RequestCreator original;
 
-    volatile private static RequestCreator picassoReq;
-
-    public ArtsyService(ImageView imv, Context c){
+    public ArtsyService(ImageView imv, Context c) {
         imageview = imv;
         context = c;
     }
 
-    public String getImgURL(){
+    public String getImgURL() {
         return null;
     }
 
-    public RequestCreator loadImage(ImageView imgView, Context context){
+    public RequestCreator loadImage(ImageView imgView, Context context) {
 
         System.out.println("imgUrlString" + imgUrlString);
 
@@ -68,7 +71,7 @@ public class ArtsyService extends AsyncTask<Object, Object, Void>{
         StringBuilder result = new StringBuilder();
         try {
             artsyUrl = new URL("https://api.artsy.net/api/artworks?sample");
-            urlConnection =  (HttpURLConnection) artsyUrl.openConnection();
+            urlConnection = (HttpURLConnection) artsyUrl.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.setRequestProperty("X-Xapp-Token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0ODQ1NjY0MjksImlhdCI6MTQ4Mzk2MTYyOSwiYXVkIjoiNTg3Mzc1MWRjOWRjMjQ1MWQ0MDA0M2ZhIiwiaXNzIjoiR3Jhdml0eSIsImp0aSI6IjU4NzM3NTFkOWMxOGRiNTkyMzAwNDk4NSJ9.9moCAHjQw1N6V8MVLQv7rVxY-_7vXupWWpmJEnpUcdM");
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
@@ -81,12 +84,12 @@ public class ArtsyService extends AsyncTask<Object, Object, Void>{
             System.out.println("printing result: " + result);
             System.out.println(result.getClass());
             Gson gson = new Gson();
-            Map<String,Object> json = new Gson().fromJson(result.toString(), Map.class);
-            imgUrlString=((Map<String,String>)((Map<String,Object>)json.get("_links")).get("image")).get("href");
+            Map<String, Object> json = new Gson().fromJson(result.toString(), Map.class);
+            imgUrlString = ((Map<String, String>) ((Map<String, Object>) json.get("_links")).get("image")).get("href");
             imgUrlString = imgUrlString.replace("{image_version}", "normalized");
             System.out.println("imgUrl over here" + imgUrlString);
 
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println("Error message is: " + e.getMessage());
             e.printStackTrace();
         }
@@ -96,23 +99,46 @@ public class ArtsyService extends AsyncTask<Object, Object, Void>{
 
 
     @Override
-    protected void onPostExecute(Void result){
+    protected void onPostExecute(Void result) {
         System.out.println("on post execute!" + imgUrlString);
-        RequestCreator imgReq = Picasso.with(context).load(imgUrlString);
+        original =Picasso.with(context).load(imgUrlString);
+        imgReq1 = Picasso.with(context).load(imgUrlString).transform(new BlurTransformation(context, 50));
+        imgReq2 = Picasso.with(context).load(imgUrlString).transform(new BlurTransformation(context, 20));
+        imgReq3 = Picasso.with(context).load(imgUrlString);
+
+
+
 //                .transform(new SketchFilterTransformation(context))
 //                .transform(new KuwaharaFilterTransformation(context, 1))
-                imgReq.error(R.drawable.aw_snap)
-                .into(imageview);
-        picassoReq=imgReq;
+
+        original.fetch();
+        original.transform(new BlurTransformation(context, 50)).error(R.drawable.aw_snap).into(imageview);
+//        imgReq1.error(R.drawable.aw_snap).into(imageview);
+//        imgReq2.fetch();
+//        imgReq3.fetch();
+
     }
 
-    public static void applyKuwaharaFilter(int radius){
-        System.out.println("radius: "+radius);
+    public static void applyKuwaharaFilter(int radius) {
+        System.out.println("radius: " + radius);
         picassoReq.transform(new KuwaharaFilterTransformation(context, radius)).into(imageview);
     }
 
-    public static void apply(int radius){
-        picassoReq.transform(new BlurTransformation(context, radius)).into(imageview);
+    public static void applyBlur(int id) {
+        switch (id) {
+            case 1:
+//                imgReq1.into(imageview);
+                original.transform(new BlurTransformation(context, 50)).into(imageview);
+                break;
+            case 2:
+//                imgReq2.into(imageview);
+                original.transform(new BlurTransformation(context, 20)).into(imageview);
+                break;
+            case 3:
+//                imgReq3.into(imageview);
+                original.into(imageview);
+                break;
+        }
     }
 
 }

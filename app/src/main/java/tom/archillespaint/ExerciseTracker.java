@@ -39,10 +39,10 @@ public class ExerciseTracker {
         return instance;
     }
 
-    public void updateAngle(final int angle) {
+    public void updateStretch(final int angle) {
         this.angle = angle;
-        if (!inRep && rep < 6) {
 
+        if (!inRep && rep < 6) {
             myActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -57,25 +57,30 @@ public class ExerciseTracker {
                                 statusTxtv.setText("Try to stretch more! time remaining: " + millisUntilFinished / 1000);
                             }
                             if(secs%10==0){
-                                ArtsyService.applyKuwaharaFilter(10*(COUNT_DOWN_STRETCH/1000-secs));
+                                System.out.println("Blur Radius: "+10*(COUNT_DOWN_STRETCH/1000-secs));
+                                ArtsyService.applyBlur(2);
                             }
 
                         }
 
                         public void onFinish() {
                             statusTxtv.setText("rep " + rep + " done!");
-                            ArtsyService.applyKuwaharaFilter(1);
                             inRep = false;
                             statusTxtv.setText("Well done! you did it!");
                             rep=0;
+                            ArtsyService.applyBlur(3);
                         }
                     }.start();
                 }
             });
             rep += 1;
         }
+    }
 
-
+    public void resetStretch(final int angle) {
+        this.angle=angle;
+        inRep=false;
+        rep=0;
     }
 
 
