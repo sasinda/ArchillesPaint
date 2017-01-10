@@ -20,6 +20,7 @@ import android.content.Context;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 
 import jp.wasabeef.picasso.transformations.gpu.KuwaharaFilterTransformation;
 
@@ -38,15 +39,14 @@ public class ArtsyService extends AsyncTask<Void, Void, Void>{
         return null;
     }
 
-    public ImageView loadImage(ImageView imgView, Context context){
+    public RequestCreator loadImage(ImageView imgView, Context context){
 
-        Picasso.with(context).load("http://i.imgur.com/DvpvklR.png")
+        RequestCreator imgReq = Picasso.with(context).load("http://i.imgur.com/DvpvklR.png");
 //                .transform(new SketchFilterTransformation(context))
-                .transform(new KuwaharaFilterTransformation(context, 1))
-                .error(R.drawable.aw_snap)
-                .into(imgView);
-
-        return imgView;
+//                .transform(new KuwaharaFilterTransformation(context, 120))
+//                .transform(new KuwaharaFilterTransformation(context, 1))
+        imgReq.error(R.drawable.aw_snap).into(imgView);
+        return imgReq;
     }
 
     @Override
