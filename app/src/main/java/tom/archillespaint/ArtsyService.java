@@ -35,9 +35,10 @@ public class ArtsyService extends AsyncTask<Object, Object, Void>{
     URL artsyUrl = null;
     HttpURLConnection urlConnection = null;
     String imgUrlString = null;
-    ImageView imageview;
-    Context context;
+    static ImageView imageview;
+    static Context context;
 
+    private static RequestCreator picassoReq;
 
     public ArtsyService(ImageView imv, Context c){
         imageview = imv;
@@ -57,7 +58,7 @@ public class ArtsyService extends AsyncTask<Object, Object, Void>{
 //                .transform(new KuwaharaFilterTransformation(context, 120))
 //                .transform(new KuwaharaFilterTransformation(context, 1))
         imgReq.error(R.drawable.aw_snap).into(imgView);
-        return imgReq;
+        return null;
     }
 
     @Override
@@ -96,10 +97,16 @@ public class ArtsyService extends AsyncTask<Object, Object, Void>{
     @Override
     protected void onPostExecute(Void result){
         System.out.println("on post execute!" + imgUrlString);
-        Picasso.with(context).load(imgUrlString)
+        RequestCreator imgReq = Picasso.with(context).load(imgUrlString);
 //                .transform(new SketchFilterTransformation(context))
-                .transform(new KuwaharaFilterTransformation(context, 1))
-                .error(R.drawable.aw_snap)
+//                .transform(new KuwaharaFilterTransformation(context, 1))
+                imgReq.error(R.drawable.aw_snap)
                 .into(imageview);
+        picassoReq=imgReq;
     }
+
+    public static void applyKuwaharaFilter(int radius){
+        picassoReq.transform(new KuwaharaFilterTransformation(context, 1)).into(imageview);
+    }
+
 }

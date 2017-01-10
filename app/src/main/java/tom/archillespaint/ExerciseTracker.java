@@ -14,14 +14,16 @@ public class ExerciseTracker {
     volatile boolean inRep =false;
     TextView statusTxtv;
 
+
     private static ExerciseTracker instance;
 
 
     private ExerciseTracker() {
     }
 
-    public void initialize(TextView status_txtv){
+    public ExerciseTracker initialize(TextView status_txtv){
          this.statusTxtv =status_txtv;
+        return this;
     }
 
     public static ExerciseTracker getInstance(){
@@ -31,11 +33,11 @@ public class ExerciseTracker {
         return instance;
     }
 
-    public void setAngle(final int angle){
+    public void updateAngle(final int angle){
         this.angle=angle;
         if (!inRep && rep<6){
             inRep =true;
-            statusTxtv.setText("Get ready for the next stretch!");
+
             new CountDownTimer(30000, 1000) {
 
                 public void onTick(long millisUntilFinished) {
@@ -49,6 +51,7 @@ public class ExerciseTracker {
 
                 public void onFinish() {
                     statusTxtv.setText("rep "+rep+" done!");
+
                     inRep =false;
                     if (rep>5){
                         rep = 0;

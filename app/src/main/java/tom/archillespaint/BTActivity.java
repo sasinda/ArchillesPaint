@@ -18,10 +18,11 @@ import java.io.OutputStream;
 import java.util.Set;
 import java.util.UUID;
 
-public class BTActivity extends Activity
+public class BTActivity extends FullscreenActivity
 {
     TextView myLabel;
     EditText myTextbox;
+
     BluetoothAdapter mBluetoothAdapter;
     BluetoothSocket mmSocket;
     BluetoothDevice mmDevice;
@@ -39,55 +40,51 @@ public class BTActivity extends Activity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bt);
+
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        Button openButton = (Button)findViewById(R.id.open);
-        Button sendButton = (Button)findViewById(R.id.send);
-        Button closeButton = (Button)findViewById(R.id.close);
-        setContentView(R.layout.activity_fullscreen);
         controllerButton=(Button)findViewById(R.id.controller);
         myLabel = (TextView)findViewById(R.id.label);
         myTextbox = (EditText)findViewById(R.id.entry);
 
         //Open Button
-        openButton.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
-                try
-                {
-                    findBT();
-                    openBT();
-                }
-                catch (IOException ex) { }
-            }
-        });
-
-        //Send Button
-        sendButton.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
-                try
-                {
-                    sendData();
-                }
-                catch (IOException ex) { }
-            }
-        });
-
-        //Close button
-        closeButton.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
-                try
-                {
-                    closeBT();
-                }
-                catch (IOException ex) { }
-            }
-        });
+//        openButton.setOnClickListener(new View.OnClickListener()
+//        {
+//            public void onClick(View v)
+//            {
+//                try
+//                {
+//                    findBT();
+//                    openBT();
+//                }
+//                catch (IOException ex) { }
+//            }
+//        });
+//
+//        //Send Button
+//        sendButton.setOnClickListener(new View.OnClickListener()
+//        {
+//            public void onClick(View v)
+//            {
+//                try
+//                {
+//                    sendData();
+//                }
+//                catch (IOException ex) { }
+//            }
+//        });
+//
+//        //Close button
+//        closeButton.setOnClickListener(new View.OnClickListener()
+//        {
+//            public void onClick(View v)
+//            {
+//                try
+//                {
+//                    closeBT();
+//                }
+//                catch (IOException ex) { }
+//            }
+//        });
     }
 
     void findBT()
