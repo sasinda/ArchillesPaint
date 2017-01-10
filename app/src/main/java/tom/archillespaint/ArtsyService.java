@@ -48,11 +48,11 @@ public class ArtsyService extends AsyncTask<Object, Object, Void>{
         return null;
     }
 
-    public ImageView loadImage(ImageView imgView, Context context){
+    public RequestCreator loadImage(ImageView imgView, Context context){
 
         System.out.println("imgUrlString" + imgUrlString);
-        Picasso.with(context).load(imgUrlString)
-        RequestCreator imgReq = Picasso.with(context).load("http://i.imgur.com/DvpvklR.png");
+
+        RequestCreator imgReq = Picasso.with(context).load(imgUrlString);
 //                .transform(new SketchFilterTransformation(context))
 //                .transform(new KuwaharaFilterTransformation(context, 120))
 //                .transform(new KuwaharaFilterTransformation(context, 1))
