@@ -31,16 +31,27 @@ import jp.wasabeef.picasso.transformations.gpu.KuwaharaFilterTransformation;
 
 
 
-public class ArtsyService extends AsyncTask<Void, Void, Void>{
+public class ArtsyService extends AsyncTask<Object, Object, Void>{
     URL artsyUrl = null;
     HttpURLConnection urlConnection = null;
+    String imgUrlString = null;
+    ImageView imageview;
+    Context context;
+
+
+    public ArtsyService(ImageView imv, Context c){
+        imageview = imv;
+        context = c;
+    }
 
     public String getImgURL(){
         return null;
     }
 
-    public RequestCreator loadImage(ImageView imgView, Context context){
+    public ImageView loadImage(ImageView imgView, Context context){
 
+        System.out.println("imgUrlString" + imgUrlString);
+        Picasso.with(context).load(imgUrlString)
         RequestCreator imgReq = Picasso.with(context).load("http://i.imgur.com/DvpvklR.png");
 //                .transform(new SketchFilterTransformation(context))
 //                .transform(new KuwaharaFilterTransformation(context, 120))
@@ -50,7 +61,8 @@ public class ArtsyService extends AsyncTask<Void, Void, Void>{
     }
 
     @Override
-    protected Void doInBackground(Void... voids) {
+    protected Void doInBackground(Object... objects) {
+
         StringBuilder result = new StringBuilder();
         try {
             artsyUrl = new URL("https://api.artsy.net/api/artworks?sample");
@@ -68,14 +80,26 @@ public class ArtsyService extends AsyncTask<Void, Void, Void>{
             System.out.println(result.getClass());
             Gson gson = new Gson();
             Map<String,Object> json = new Gson().fromJson(result.toString(), Map.class);
-            String imgUrl=((Map<String,String>)((Map<String,Object>)json.get("_links")).get("image")).get("href");
-
+            imgUrlString=((Map<String,String>)((Map<String,Object>)json.get("_links")).get("image")).get("href");
+            imgUrlString = imgUrlString.replace("{image_version}", "normalized");
+            System.out.println("imgUrl over here" + imgUrlString);
 
         }catch(Exception e){
-            System.out.println("errorrrrr");
-            System.out.println(e.getMessage());
+            System.out.println("Error message is: " + e.getMessage());
             e.printStackTrace();
         }
+
         return null;
+    }
+
+
+    @Override
+    protected void onPostExecute(Void result){
+        System.out.println("on post execute!" + imgUrlString);
+        Picasso.with(context).load(imgUrlString)
+//                .transform(new SketchFilterTransformation(context))
+                .transform(new KuwaharaFilterTransformation(context, 1))
+                .error(R.drawable.aw_snap)
+                .into(imageview);
     }
 }
