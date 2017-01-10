@@ -109,9 +109,17 @@ public class FullscreenActivity extends AppCompatActivity {
 
 
         Button new_pic_btn = (Button) findViewById(R.id.new_pic_btn);
+        final ArtsyService artService= new ArtsyService(mContentView, context);
+        new_pic_btn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Do something in response to button click
+                artService.execute();
+            }
+        });
+
         //this is the function that we need the button to execute
-        ArtsyService artService= new ArtsyService(mContentView, context);
-        artService.execute();
+
+
 
         //artService.loadImage(mContentView, context);
         System.out.println("DONE!");
