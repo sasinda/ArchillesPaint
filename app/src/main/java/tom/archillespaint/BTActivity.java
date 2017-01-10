@@ -37,7 +37,7 @@ public class BTActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bt);
-
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         Button openButton = (Button)findViewById(R.id.open);
         Button sendButton = (Button)findViewById(R.id.send);
         Button closeButton = (Button)findViewById(R.id.close);
@@ -87,7 +87,7 @@ public class BTActivity extends Activity
 
     void findBT()
     {
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
         if(mBluetoothAdapter == null)
         {
             myLabel.setText("No bluetooth adapter available");
@@ -104,7 +104,9 @@ public class BTActivity extends Activity
         {
             for(BluetoothDevice device : pairedDevices)
             {
-                if(device.getName().equals("MattsBlueTooth"))
+                System.out.println("________________________");
+                System.out.println(device.getName());
+                if(device.getName().equals("Tom17"))
                 {
                     mmDevice = device;
                     break;
@@ -159,13 +161,15 @@ public class BTActivity extends Activity
                                     final String data = new String(encodedBytes, "US-ASCII");
                                     readBufferPosition = 0;
 
-                                    handler.post(new Runnable()
-                                    {
-                                        public void run()
-                                        {
-                                            myLabel.setText(data);
-                                        }
-                                    });
+                                    counter+=Integer.parseInt(data);
+                                    System.out.println(counter);
+//                                    handler.post(new Runnable()
+//                                    {
+//                                        public void run()
+//                                        {
+//                                            myLabel.setText(data);
+//                                        }
+//                                    });
                                 }
                                 else
                                 {

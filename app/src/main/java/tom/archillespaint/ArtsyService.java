@@ -12,6 +12,8 @@ import org.json.JSONArray;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.io.*;
+import java.util.Map;
+
 import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
 
 import android.content.Context;
@@ -40,7 +42,7 @@ public class ArtsyService extends AsyncTask<Void, Void, Void>{
 
         Picasso.with(context).load("http://i.imgur.com/DvpvklR.png")
 //                .transform(new SketchFilterTransformation(context))
-                .transform(new KuwaharaFilterTransformation(context, 10))
+                .transform(new KuwaharaFilterTransformation(context, 1))
                 .error(R.drawable.aw_snap)
                 .into(imgView);
 
@@ -65,8 +67,8 @@ public class ArtsyService extends AsyncTask<Void, Void, Void>{
             System.out.println("printing result: " + result);
             System.out.println(result.getClass());
             Gson gson = new Gson();
-            MyClass myClassObj = gson.fromJson(response, MyClass.class);
-
+            Map<String,Object> json = new Gson().fromJson(result.toString(), Map.class);
+            String imgUrl=((Map<String,String>)((Map<String,Object>)json.get("_links")).get("image")).get("href");
 
 
         }catch(Exception e){
