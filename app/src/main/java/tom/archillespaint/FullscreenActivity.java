@@ -8,7 +8,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -104,8 +107,14 @@ public class FullscreenActivity extends AppCompatActivity {
             }
         });
 
-        ArtsyService artService= new ArtsyService();
-        artService.loadImage(mContentView, context);
+
+        Button new_pic_btn = (Button) findViewById(R.id.new_pic_btn);
+        //this is the function that we need the button to execute
+        ArtsyService artService= new ArtsyService(mContentView, context);
+        artService.execute();
+
+        //artService.loadImage(mContentView, context);
+        System.out.println("DONE!");
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
