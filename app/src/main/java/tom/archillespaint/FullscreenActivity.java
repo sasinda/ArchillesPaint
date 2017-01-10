@@ -171,7 +171,7 @@ public class FullscreenActivity extends AppCompatActivity {
             }
         });
 
-        tracker= ExerciseTracker.getInstance().initialize(mStatusLabel);
+        tracker= ExerciseTracker.getInstance().initialize(this, mStatusLabel);
         //artService.loadImage(mContentView, context);
         System.out.println("DONE!");
         // Upon interacting with UI controls, delay any scheduled hide()
@@ -316,7 +316,7 @@ public class FullscreenActivity extends AppCompatActivity {
                                     System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
                                     final String data = new String(encodedBytes, "US-ASCII");
                                     readBufferPosition = 0;
-                                    System.out.println(data);
+//                                    System.out.println(data);
                                     if (data=="101"){
                                         state=1;
                                         angle=100;

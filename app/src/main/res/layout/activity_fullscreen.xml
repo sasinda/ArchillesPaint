@@ -39,7 +39,7 @@
                 android:id="@+id/status_txtv"
                 android:layout_weight="0.24"
                 android:layout_gravity="top"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:layout_height="50dp" />
         </LinearLayout>
 

@@ -109,4 +109,8 @@ public class ArtsyService extends AsyncTask<Object, Object, Void>{
         picassoReq.transform(new KuwaharaFilterTransformation(context, 1)).into(imageview);
     }
 
+    public static void apply(int radius){
+        picassoReq.transform(new KuwaharaFilterTransformation(context, 1)).into(imageview);
+    }
+
 }
